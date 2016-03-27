@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src = 'js/jquery1.12.1.js'></script>
+	<style>
+  *{
+    cursor: pointer;
+  }
+  body{
+    overflow: hidden;
+    background: url(images/12345.jpg);
+    background-size:1390px 800px; 
+  }
+      .box{
+      	width: 600px;
+      	height: 600px;
+        margin: 0 auto;
+        margin-top:3%; 
+        overflow: hidden;
+      }
+      .block{
+        width: 30px;
+        height: 30px;
+      	float: left;
+      	text-align: center;
+      	line-height: 28px;
+      	font-weight: bold;
+      	font-size: 20px;
+        background-image:url(images/未标题-1.jpg); 
+      }
+      .block1{
+        width: 30px;
+        height: 30px;
+        float: left;
+        text-align: center;
+        line-height: 28px;
+        font-weight: bold;
+        font-size: 20px;
+        background-image:url(images/qizi.jpg); 
+      }
+      .red{
+      	background:red;
+      	-webkit-animation:shanshuo 1s ease;
+      }
+      @keyframes shanshuo{
+      	0%,100%{
+          transform: scale(1,1)
+      	}
+      	80%{
+          transform: scale(1.2,1.4)
+      	}
+      }
+      .blue{
+      	-webkit-animation:shanshuo 1s ease;
+      	background: blue;
+      }
+      .yellow{
+      	-webkit-animation:shanshuo 1s ease;
+      	background: yellow;
+      }
+      .purple{
+      	-webkit-animation:shanshuo 1s ease;
+      	background: purple;
+      }
+      .pink{
+      	-webkit-animation:shanshuo 1s ease;
+      	background: pink;
+      }
+      .black{
+      	-webkit-animation:shanshuo 1s ease;
+      	background: black;
+      }
+      .green{
+      	-webkit-animation:shanshuo 1s ease;
+      	background: green;
+      }
+      .zha{
+        width: 30px;
+        height: 30px;
+        float: left;
+        text-align: center;
+        line-height: 28px;
+        font-weight: bold;
+        font-size: 20px;
+        background-size:30px 30px;
+        background-image:url(images/311.jpg);  
+        animation: zha 2s ease;
+      }
+      @keyframes zha{
+        0%{
+          transform: scale(1,1);
+        }
+        30%{
+          background: red;
+          background-image:url(images/ha.jpg);
+          background-size: 30px 30px;
+        }
+        100%{
+        transform: scale(1.3,1.3);
+        background-image:url(images/311.jpg);
+        }
+      }
+      .kong{
+        width: 30px;
+        height: 30px;
+        float: left;
+        text-align: center;
+        line-height: 28px;
+        font-weight: bold;
+        font-size: 20px;
+        background-image:url(images/未标题-2.jpg);
+        background-size:30px 30px;  
+      }
+      .star{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left:0;
+        top:0;
+        background:white;
+        opacity: 0.7;
+      }
+      .start{
+        width: 20%;
+        height: 15%;
+        position: absolute;
+         transition: all 0.5s ease;
+        left:43%;
+        top:40%;
+        color:#000;
+        font-size: 50px;
+      }
+      .start:hover{
+        transform:scale(1.4,1.5); 
+      }
+       .over{
+        width:100px;
+        height: 50px;
+        border-radius: 5px;
+        background: #000;
+        position: absolute;
+        left:20%;
+        top:30%;  
+        color:#fff;
+        line-height: 50px;
+        text-align: center;
+        font-size: 20px;
+        opacity: 0.7;
+      }
+	</style>
+</head>
+<body>
+  <div class="star">
+    <div class="start">开始游戏</div> 
+  </div>
+	<div class="box"></div>
+  <div class="over">重新开始</div>
+</body>
+<script>
+	$(function(){
+   $('.start').click(function(){
+      $(this).css('display','none');
+      $('.star').css('display','none');
+   })
+
+		var h = '';
+        var newarr = {};
+        var x,y;
+		for(var i = 0;i<400;i++){
+			h += '<div></div>';
+		}
+
+$('.box').html(h)
+.find('div')
+.addClass('block')
+.each(function(i){
+ if(Math.random() > 0.8){
+  $(this).data('is',true);
+  x = i%20+1;
+  y = parseInt(i/20)+1;
+  newarr[x+'_'+y] = true;
+}
+//坐标
+$(this).data('index',i);
+})
+$('.box div').each(function(i){
+ if(!$(this).data('is')){
+  x = i%20+1;
+  y = parseInt(i/20)+1;
+  newarr[x+'_'+y] = false;
+}
+})
+
+//按下
+$('.box div').mousedown(function(e){
+  if(e.which == 1){
+    x = $(this).data('index')%20+1;
+    y = parseInt($(this).data('index')/20)+1;
+
+        if($(this).data('is')){
+            alert('bow!');
+            $(this).addClass('zha');
+            $('.box div').addClass(function(i){
+                 if($(this).data('is')){
+                  $(this).addClass('zha').css('-webkit-animation-delay',Math.random()*3+'s');
+                }else{
+                  $(this).addClass('kong');
+                }
+          })
+        }else{
+          var shuzi = 0;
+              if(newarr[(x-1)+'_'+y]){shuzi++}
+              if(newarr[(x+1)+'_'+y]){shuzi++}
+              if(newarr[(x-1)+'_'+(y-1)]){shuzi++}
+              if(newarr[(x-1)+'_'+(y+1)]){shuzi++}
+              if(newarr[(x+1)+'_'+(y+1)]){shuzi++}
+              if(newarr[(x+1)+'_'+(y-1)]){shuzi++}
+              if(newarr[x+'_'+(y+1)]){shuzi++}
+              if(newarr[x+'_'+(y-1)]){shuzi++}
+          $(this).text(shuzi);
+          $(this).addClass('kong');
+              } 
+    }else if(e.which == 3){
+        $(this).removeClass('block').addClass('block1');
+    }
+})
+
+
+$('.over').click(function(){
+   $('.box div').removeClass().text('').addClass('block');
+   $('.block').each(function(){
+      $(this).removeData('is');
+      if(Math.random()>0.8){
+        $(this).data('is',true)
+      }
+   })
+})
+document.oncontextmenu = function ()
+{
+  return false
+}
+        //第一种
+      //   $('.box').html(h)
+      //            .find('div')
+      //            .addClass('block')
+      //   $('.box div:lt(20)').removeClass().end();
+      //   $('.box div:gt(379)').removeClass().end();
+      //   $('.box div:nth-child(19n+1)').removeClass().end();
+      //   $('.box div:nth-child(19n)').removeClass().end();
+
+      //            $('.box div').each(function(i){
+      //              if(Math.random() > 0.8){
+      //                   $(this).data('iss',true)
+      //              }
+      //                   $(this).data('index',i)
+      //            })
+      //            .click(function(){
+      //               if($(this).data('iss')){
+      //                $(this).addClass('red')
+      //               }else{
+      //                var shuzi = 0;
+      //                var pos = $(this).data('index');
+      //                if($('.box div').eq(pos-1).data('iss')){shuzi++};
+            // if($('.box div').eq(pos+1).data('iss')){shuzi++};
+            // if($('.box div').eq(pos-20).data('iss')){shuzi++};
+            // if($('.box div').eq(pos-21).data('iss')){shuzi++};
+            // if($('.box div').eq(pos-23).data('iss')){shuzi++};
+            // if($('.box div').eq(pos+23).data('iss')){shuzi++};
+            // if($('.box div').eq(pos+22).data('iss')){shuzi++};
+            // if($('.box div').eq(pos+21).data('iss')){shuzi++};
+            // $(this).text(shuzi)
+      //               }
+      //            }
+
+	})
+</script>
+</html>
